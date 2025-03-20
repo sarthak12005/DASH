@@ -47,31 +47,35 @@ const Home = () => {
                {/* <Footer /> */}
             </>
          ) : (
-            <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-               <div className="bg-white p-8 rounded-lg shadow-md w-96">
-                  <h1 className="text-2xl font-bold text-center mb-4">Lock Screen</h1>
-                  <input
-                     type="email"
-                     placeholder="Enter your email"
-                     className="w-full p-2 mb-3 border rounded-md"
-                     value={email}
-                     onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <input
-                     type="password"
-                     placeholder="Enter your password"
-                     className="w-full p-2 mb-3 border rounded-md"
-                     value={password}
-                     onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <button
-                     onClick={handleLogin}
-                     className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-                  >
-                     Unlock
-                  </button>
-               </div>
+            <div className="flex items-center justify-center h-screen bg-gradient-to-br from-yellow-100 to-yellow-300">
+            <div className="bg-white p-8 rounded-2xl shadow-lg w-96 border border-yellow-400">
+              <h1 className="text-3xl font-extrabold text-center mb-6 text-yellow-600 drop-shadow-md">
+                WEBDASH Lock Screen
+              </h1>
+              <div className="space-y-4">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full p-3 border border-yellow-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  className="w-full p-3 border border-yellow-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  onClick={handleLogin}
+                  className="w-full bg-yellow-500 text-white font-bold py-3 rounded-lg shadow-md hover:bg-yellow-600 transition-all hover:shadow-xl"
+                >
+                  Unlock
+                </button>
+              </div>
             </div>
+          </div>
          )}
       </>
    );
