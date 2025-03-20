@@ -33,7 +33,7 @@ const Diary = () => {
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar />
       <div className="flex-grow flex flex-col items-center py-10 mt-20">
-        <h2 className="text-3xl font-bold mb-6 text-pink-600">My Diary</h2>
+        <h2 className="text-3xl font-bold mb-6 text-black">My Diary</h2>
         <div className="w-3/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
             {entries.length > 0 ? (
@@ -69,7 +69,7 @@ const Diary = () => {
 
         <button
           onClick={() => setShowModal(true)}
-          className="fixed bottom-10 right-10 bg-pink-500 text-white p-4 rounded-full shadow-lg hover:bg-pink-600 transition-all"
+          className="fixed bottom-10 right-10 bg-yellow-500 text-white p-4 rounded-full shadow-lg hover:bg-pink-600 transition-all"
         >
           <PlusCircle size={32} />
         </button>
@@ -93,7 +93,7 @@ const Diary = () => {
             <div className="flex space-x-4 mt-4">
               <button
                 onClick={addEntry}
-                className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 transition-all"
+                className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 transition-all"
               >
                 Add Entry
               </button>

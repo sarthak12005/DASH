@@ -82,10 +82,10 @@ const DailyTasks = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-r from-pink-100 to-pink-200">
+    <div className="min-h-screen flex flex-col bg-gradient-to-r from-yellow-100 to-yellow-200">
       <Navbar />
       <div className="flex-grow flex flex-col items-center py-10 mt-20">
-        <h2 className="text-4xl font-bold mb-6 text-pink-700 animate-fade-in">Daily Tasks</h2>
+        <h2 className="text-4xl font-bold mb-6 text-black animate-fade-in">Daily Tasks</h2>
         <p className="text-gray-600 mb-4">Complete these tasks to make your day productive!</p>
 
         {/* Progress Tracker

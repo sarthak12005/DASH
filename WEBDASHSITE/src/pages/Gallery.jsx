@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Navbar from '../components/Navbar';
+import Navbar from '../Components/navbar';
 import Image1 from '../assets/dashImage1.jpg';
 import Image2 from '../assets/dashImage2.jpg';
 import Image3 from '../assets/dashImage3.jpg';
