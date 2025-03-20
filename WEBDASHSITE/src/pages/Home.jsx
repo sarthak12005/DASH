@@ -48,7 +48,7 @@ const Home = () => {
             </>
          ) : (
             <div className="flex items-center justify-center h-screen bg-gradient-to-br from-yellow-100 to-yellow-300">
-            <div className="bg-white p-8 rounded-2xl shadow-lg w-96 border border-yellow-400">
+            <div className="bg-white p-8 rounded-2xl shadow-lg w-96 border border-yellow-400 h-52" >
               <h1 className="text-3xl font-extrabold text-center mb-6 text-yellow-600 drop-shadow-md">
                 WEBDASH Lock Screen
               </h1>
