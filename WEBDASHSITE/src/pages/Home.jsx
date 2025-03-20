@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Navbar from "../Components/navbar";
 // import HeroSection from "../components/HeroSection";
-import FakeHero from "../components/FakeHero";
+import FakeHero from "../Components/fakehero";
 // import ImageTextSection from "../components/Original/ImagesSection";
-import FakeImages from "../components/FakeImages";
+import FakeImages from "../Components/fakeimages";
 // import HeartMessage from "../components/Original/HeartMessage";
-import FakeMaessage from "../components/FakeMessage";
-import VideoComponent from "../components/VideoComponent";
-import PdfManager from "../components/PdfManager";
+import FakeMaessage from "../Components/fakemessage";
+import VideoComponent from "../Components/videocomponent";
+import PdfManager from "../Components/pdfmanager";
 // import Footer from "../components/Footer";
-import SongCenter from "../components/SongCenter";
+import SongCenter from "../Components/songcenter";
 
 const Home = () => {
    const [login, setLogin] = useState(false);
