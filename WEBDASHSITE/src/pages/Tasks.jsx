@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlusCircle, CheckCircle } from "lucide-react";
-import Navbar from "../components/Navbar";
+import Navbar from "../Components/navbar";
 // import Footer from "../components/Footer";
 
 const Tasks = () => {

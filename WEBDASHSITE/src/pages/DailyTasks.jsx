@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import Swal from "sweetalert2";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../Components/navbar";
+import Footer from "../Components/footer";
 
 const dailyTasksList = [
   "Wake up at 5:30 AM",

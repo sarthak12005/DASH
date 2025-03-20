@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../Components/navbar";
+import Footer from "../Components/footer";
 import { motion } from "framer-motion";
 
 const ppts = [

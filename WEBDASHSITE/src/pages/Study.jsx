@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlusCircle, Trash2 } from "lucide-react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../Components/navbar";
+import Footer from "../Components/footer";
 
 const Study = () => {
   const [entries, setEntries] = useState(() => {
