@@ -112,7 +112,7 @@ const SongCenter = () => {
                 <div className="flex items-center gap-2">
                   {/* Download Button */}
                   <a
-                    href={`http://localhost:9000/api/Up-Song/download/${song.filename}`} // Correct backend URL
+                    href={`${API_URL}/api/Up-Song/download/${song.filename}`} // Correct backend URL
                     download={song.originalName || song.filename}
                     className="text-green-500 hover:text-green-700 transition"
                     title="Download"
