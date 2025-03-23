@@ -5,6 +5,7 @@ import Diary from "./pages/Diary";
 import Study from "./pages/Study";
 import Home from "./pages/Home";
 import DailyTasks from "./pages/DailyTasks";
+import Admin from "./pages/Admin";
 // import Gallery from "./pages/Gallery";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/study" element={<Study />} />
         <Route path="/dailytasks" element={<DailyTasks />} />
         {/* <Route path="/gallery" element={<Gallery/>}/> */}
+        <Route path='/admin' element={<Admin/>}/>
       </Routes>
     </Router>
   );

@@ -1,33 +1,78 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { API_URL } from "../config";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlusCircle, Trash2, Eye } from "lucide-react";
 import Navbar from "../Components/navbar";
 import Footer from "../Components/footer";
 
 const Diary = () => {
-  const [entries, setEntries] = useState(() => {
-    return JSON.parse(localStorage.getItem("diaryEntries")) || [];
-  });
+  const [entries, setEntries] = useState([]);
   const [newEntry, setNewEntry] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem("diaryEntries", JSON.stringify(entries));
-  }, [entries]);
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      axios.get(`${API_URL}/api/diary`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((response) => setEntries(response.data))
+      .catch((error) => {
+        console.error("Error fetching diary entries:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+        }
+      });
+    }
+  }, []);
 
   const addEntry = () => {
-    if (newEntry.trim() !== "") {
-      const date = new Date().toLocaleDateString();
-      setEntries([...entries, { text: newEntry, date }]);
-      setNewEntry("");
-      setShowModal(false);
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken && newEntry.trim() !== "") {
+      axios.post(
+        `${API_URL}/api/diary`,
+        {
+          date: new Date().toISOString(),
+          title: "New Entry",  // You can make this dynamic if needed
+          content: newEntry,
+        },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      )
+      .then((response) => {
+        setEntries([...entries, response.data]);
+        setNewEntry("");
+        setShowModal(false);
+      })
+      .catch((error) => {
+        console.error("Error adding entry:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+        }
+      });
     }
   };
+  
 
-  const deleteEntry = (index) => {
-    setEntries((prevEntries) => prevEntries.filter((_, i) => i !== index));
+  const deleteEntry = (id) => {
+    const accessToken = localStorage.getItem("accessToken");
+    axios.delete(`${API_URL}/api/diary/${id}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+    .then(() => {
+      setEntries(entries.filter((entry) => entry._id !== id));
+    })
+    .catch((error) => {
+      console.error("Error deleting entry:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+      }
+    });
   };
+  
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
@@ -37,16 +82,16 @@ const Diary = () => {
         <div className="w-3/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
             {entries.length > 0 ? (
-              entries.map((entry, index) => (
+              entries.map((entry) => (
                 <motion.div
-                  key={index}
+                  key={entry._id}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.3 }}
                   className="p-5 h-[250px] bg-white rounded-lg shadow-md flex flex-col justify-between transition-all hover:bg-pink-50"
                 >
-                  <h3 className="text-lg font-semibold text-gray-700">{entry.date}</h3>
+                  <h3 className="text-lg font-semibold text-gray-700">{new Date(entry.createdAt).toLocaleDateString()}</h3>
                   <button
                     onClick={() => setSelectedEntry(entry)}
                     className="mt-2 w-[88px] bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition-all flex items-center justify-center"
@@ -54,7 +99,7 @@ const Diary = () => {
                     <Eye size={20} className="mr-1" /> View
                   </button>
                   <button
-                    onClick={() => deleteEntry(index)}
+                    onClick={() => deleteEntry(entry._id)}
                     className="mt-2 w-[88px] bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition-all"
                   >
                     <Trash2 size={20} />
@@ -116,8 +161,8 @@ const Diary = () => {
             exit={{ opacity: 0, scale: 0.8 }}
             className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center w-96"
           >
-            <h3 className="text-xl font-bold mb-4">{selectedEntry.date}</h3>
-            <p className="text-gray-700 text-lg text-center break-words">{selectedEntry.text}</p>
+            <h3 className="text-xl font-bold mb-4">{new Date(selectedEntry.createdAt).toLocaleDateString()}</h3>
+            <p className="text-gray-700 text-lg text-center break-words">{selectedEntry.content}</p>
             <button
               onClick={() => setSelectedEntry(null)}
               className="mt-4 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-all"

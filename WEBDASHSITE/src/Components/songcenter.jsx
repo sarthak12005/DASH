@@ -1,38 +1,67 @@
 import React, { useState, useEffect } from "react";
 import { Download, Trash2 } from "lucide-react";
+import axios from "axios";
+import { API_URL } from "../config";
 
 const SongCenter = () => {
   const [songRequests, setSongRequests] = useState([]);
   const [uploadedSongs, setUploadedSongs] = useState([]);
   const [newRequest, setNewRequest] = useState("");
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    const savedRequests = JSON.parse(localStorage.getItem("songRequests")) || [];
-    const savedSongs = JSON.parse(localStorage.getItem("uploadedSongs")) || [];
-    setSongRequests(savedRequests);
-    setUploadedSongs(savedSongs);
-  }, []);
+    const fetchRequests = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/api/songs`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setSongRequests(res.data);
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+    };
 
-  const addRequest = () => {
+    const fetchUploadedSongs = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/api/Up-Song/songs`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUploadedSongs(res.data);
+      } catch (error) {
+        console.error("Error fetching uploaded songs:", error);
+      }
+    };
+
+    fetchRequests();
+    fetchUploadedSongs();
+  }, [token]);
+
+  const addRequest = async () => {
     if (newRequest.trim()) {
-      const updatedRequests = [...songRequests, newRequest];
-      setSongRequests(updatedRequests);
-      localStorage.setItem("songRequests", JSON.stringify(updatedRequests));
-      setNewRequest("");
+      try {
+        const res = await axios.post(
+          `${API_URL}/api/songs`,
+          { songs: [newRequest] },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setSongRequests([...songRequests, res.data]);
+        setUploadedSongs([...uploadedSongs, newRequest]);
+        setNewRequest("");
+      } catch (error) {
+        console.error("Error adding request:", error);
+      }
     }
   };
 
-  const uploadSong = (event) => {
-    const files = Array.from(event.target.files);
-    const updatedSongs = [...uploadedSongs, ...files.map(file => file.name)];
-    setUploadedSongs(updatedSongs);
-    localStorage.setItem("uploadedSongs", JSON.stringify(updatedSongs));
-  };
-
-  const deleteSong = (index) => {
-    const updatedSongs = uploadedSongs.filter((_, i) => i !== index);
-    setUploadedSongs(updatedSongs);
-    localStorage.setItem("uploadedSongs", JSON.stringify(updatedSongs));
+  const handleDelete = async (song) => {
+    try {
+      await axios.delete(`${API_URL}api/Up-Song/uploaded/${song}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUploadedSongs(uploadedSongs.filter((s) => s !== song));
+    } catch (error) {
+      console.error("Error deleting song:", error);
+    }
   };
 
   return (
@@ -58,8 +87,10 @@ const SongCenter = () => {
             </button>
           </div>
           <ul className="space-y-2 max-h-40 overflow-y-auto">
-            {songRequests.map((request, index) => (
-              <li key={index} className="bg-pink-50 p-2 rounded-md shadow-sm">{request}</li>
+            {songRequests.map((request) => (
+              <li key={request._id} className="bg-pink-50 p-2 rounded-md shadow-sm">
+                {request.songs.join(", ")} (Status: {request.status})
+              </li>
             ))}
           </ul>
         </div>
@@ -67,41 +98,31 @@ const SongCenter = () => {
         {/* Uploaded Songs Section */}
         <div className="bg-white p-4 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold text-black mb-2">Uploaded Songs</h3>
-          <div className="mb-4">
-            <input
-              type="file"
-              accept="audio/*"
-              multiple
-              onChange={uploadSong}
-              className="hidden"
-              id="songUpload"
-            />
-            <label
-              htmlFor="songUpload"
-              className="cursor-pointer bg-black text-white px-4 py-2 rounded-md hover:bg-pink-600 transition"
-            >
-              Upload Songs
-            </label>
-          </div>
           <ul className="space-y-2 max-h-40 overflow-y-auto">
             {uploadedSongs.map((song, index) => (
               <li key={index} className="bg-pink-50 p-2 rounded-md flex items-center justify-between">
-                {song}
+                <span>{song.filename}</span> {/* Show the song name */}
                 <div className="flex items-center gap-2">
+                  {/* Download Button */}
                   <a
-                    href={`#`} // Replace with actual path if needed
-                    download={song}
+                    href={song.url} // Use the URL from the object
+                    download={song.filename}
                     className="text-green-500 hover:text-green-700"
                   >
                     <Download size={20} />
                   </a>
-                  <button onClick={() => deleteSong(index)} className="text-red-500 hover:text-red-700">
+                  {/* Delete Button */}
+                  <button
+                    onClick={() => handleDelete(song.filename)}
+                    className="text-red-500 hover:text-red-700"
+                  >
                     <Trash2 size={20} />
                   </button>
                 </div>
               </li>
             ))}
           </ul>
+
         </div>
       </div>
     </div>
