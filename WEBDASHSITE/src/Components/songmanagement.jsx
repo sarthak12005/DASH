@@ -26,6 +26,17 @@ const SongManagement = () => {
     }
   };
 
+  const handleRequstDelete = async (id) => {
+      try {
+         const res = await axios.delete(`${API_URL}/api/songs/${id}`, {
+            headers: {Authorization: `Bearer ${localStorage.getItem("accessToken")}`},
+         });
+         console.log("The song request deleted successfully");
+      } catch (err) {
+         console.error("Error deleting requests", err);
+      }
+  }
+
   const fetchUploadedSongs = async () => {
     try {
       const res = await axios.get(`${API_URL}/api/Up-Song/songs`, {
@@ -107,7 +118,7 @@ const SongManagement = () => {
               <div key={req._id} className="flex justify-between items-center p-4 bg-pink-50 rounded-lg shadow">
                 <span className="text-lg">{req.songs.join(", ")}</span>
                 <button
-                  onClick={() => handleDelete(req._id)}
+                  onClick={() => handleRequstDelete(req._id)}
                   className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
                 >
                   Delete
