@@ -53,7 +53,7 @@ router.get('/songs', authMiddleware, async (req, res) => {
 
     const songs = fs.readdirSync(songsDir).map((file) => ({
       filename: file,
-      url: `${API_URL}/uploads/songs/${file}`,
+      url: `https://dash-1-bnn5.onrender.com/uploads/songs/${file}`, // Fixed URL
     }));
 
     res.json(songs);
