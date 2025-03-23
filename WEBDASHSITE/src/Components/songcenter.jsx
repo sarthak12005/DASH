@@ -23,26 +23,21 @@ const SongCenter = () => {
 
     const fetchUploadedSongs = async () => {
       try {
-        const token = localStorage.getItem('accessToken'); // Get the token from localStorage (or sessionStorage)
-    
-        if (!token) {
-          console.error('No token found. Please log in.');
-          return;
-        }
-    
+
+
         const response = await axios.get(`${API_URL}/api/Up-Song/songs`, {
           headers: {
             Authorization: `Bearer ${token}`, // Send token in Authorization header
           },
         });
-    
+
         console.log(response.data);
         setUploadedSongs(response.data);
       } catch (error) {
         console.error('Error fetching uploaded songs:', error);
       }
     };
-    
+
 
     fetchRequests();
     fetchUploadedSongs();
