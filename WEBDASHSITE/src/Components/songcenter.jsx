@@ -21,7 +21,7 @@ const SongCenter = () => {
       }
     };
 
-    const fetchSongs = async () => {
+    const fetchUploadedSongs = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/Up-Song/songs`);
         console.log(response.data);
