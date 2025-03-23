@@ -44,19 +44,27 @@ router.post('/upload', authMiddleware, upload.single('song'), async (req, res) =
 
 // GET: Fetch all uploaded songs
 router.get('/songs', authMiddleware, async (req, res) => {
+  const songsDir = path.join(__dirname, '../uploads/songs/');
+
   try {
-    const songs = fs.readdirSync('uploads/songs/').map((file) => ({
+    // Check if the folder exists
+    if (!fs.existsSync(songsDir)) {
+      return res.status(404).json({ message: 'Songs folder not found' });
+    }
+
+    // Read songs from the folder
+    const songs = fs.readdirSync(songsDir).map((file) => ({
       filename: file,
-      originalName: file.split('_').slice(1).join('_'), // Extract original name from filename
       url: `/uploads/songs/${file}`,
     }));
 
     res.json(songs);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.error('Error fetching songs:', error.message);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
+
 
 // DELETE: Delete a song (Admin)
 router.delete('/songs/:filename', authMiddleware, async (req, res) => {
