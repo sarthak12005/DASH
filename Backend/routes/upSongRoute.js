@@ -53,7 +53,7 @@ router.get('/songs', authMiddleware, async (req, res) => {
 
     const songs = fs.readdirSync(songsDir).map((file) => ({
       filename: file,
-      url: `/uploads/songs/${file}`,
+      url: `${API_URL}/uploads/songs/${file}`,
     }));
 
     res.json(songs);
