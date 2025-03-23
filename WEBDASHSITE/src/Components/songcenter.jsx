@@ -23,7 +23,7 @@ const SongCenter = () => {
 
     const fetchUploadedSongs = async () => {
       try {
-        const token = localStorage.getItem('token'); // Get the token from localStorage (or sessionStorage)
+        const token = localStorage.getItem('accessToken'); // Get the token from localStorage (or sessionStorage)
     
         if (!token) {
           console.error('No token found. Please log in.');
