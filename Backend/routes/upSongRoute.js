@@ -1,16 +1,26 @@
+// Imports
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const SongRequest = require('../module/SongRequest');
 const router = express.Router();
-const authMiddleware = require('../middleware/auth'); // Auth middleware
+const authMiddleware = require('../middleware/auth');
 
-// Set up storage for song uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/songs/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`); // Use original name with timestamp
+  },
+});
+
 const upload = multer({
-  dest: 'uploads/songs/', // Store in uploads/songs/ directory
+  storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // Limit to 10MB
 });
+
 
 // POST: Upload new song (Admin)
 router.post('/upload', authMiddleware, upload.single('song'), async (req, res) => {
@@ -37,6 +47,7 @@ router.get('/songs', authMiddleware, async (req, res) => {
   try {
     const songs = fs.readdirSync('uploads/songs/').map((file) => ({
       filename: file,
+      originalName: file.split('_').slice(1).join('_'), // Extract original name from filename
       url: `/uploads/songs/${file}`,
     }));
 
@@ -48,25 +59,33 @@ router.get('/songs', authMiddleware, async (req, res) => {
 });
 
 // DELETE: Delete a song (Admin)
-// DELETE: Delete a song (Admin)
-// DELETE: Delete a song (Admin)
 router.delete('/songs/:filename', authMiddleware, async (req, res) => {
-    try {
-      const { filename } = req.params;
-      const filePath = path.join(__dirname, '../uploads/songs/', filename);
-  
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-        res.json({ message: 'Song deleted successfully' });
-      } else {
-        res.status(404).json({ message: 'Song not found' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+  try {
+    const { filename } = req.params;
+    const filePath = path.join(__dirname, '../uploads/songs/', filename);
+
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      res.json({ message: 'Song deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Song not found' });
     }
-  });
-  
-  
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+// New route for downloading songs (optional but useful)
+router.get('/download/:filename', authMiddleware, (req, res) => {
+  const { filename } = req.params;
+  const filePath = path.join(__dirname, '../uploads/songs/', filename);
+
+  if (fs.existsSync(filePath)) {
+    res.download(filePath);
+  } else {
+    res.status(404).json({ message: 'Song not found' });
+  }
+});
 
 module.exports = router;

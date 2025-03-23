@@ -17,7 +17,8 @@ const app = express();
 app.use(express.json())
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use('/uploads/songs', express.static(path.join(__dirname, 'uploads/songs')))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 app.use('/api/auth', authRoutes);
 app.use('/api/songs', songRoutes);

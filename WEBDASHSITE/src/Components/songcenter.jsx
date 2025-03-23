@@ -105,12 +105,13 @@ const SongCenter = () => {
                 <div className="flex items-center gap-2">
                   {/* Download Button */}
                   <a
-                    href={song.url} // Use the URL from the object
-                    download={song.filename}
+                    href={`http://localhost:9000/uploads/songs/${song.filename}`} // Correct backend URL
+                    download={song.originalName || song.filename} // Clean filename for download
                     className="text-green-500 hover:text-green-700"
                   >
                     <Download size={20} />
                   </a>
+
                   {/* Delete Button */}
                   <button
                     onClick={() => handleDelete(song.filename)}
