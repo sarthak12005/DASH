@@ -21,16 +21,16 @@ const SongCenter = () => {
       }
     };
 
-    const fetchUploadedSongs = async () => {
+    const fetchSongs = async () => {
       try {
-        const res = await axios.get(`${API_URL}/api/Up-Song/songs`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUploadedSongs(res.data);
+        const response = await axios.get(`${API_URL}/api/Up-Song/songs`);
+        console.log(response.data);
+        setUploadedSongs(response.data);
       } catch (error) {
-        console.error("Error fetching uploaded songs:", error);
+        console.error('Error fetching uploaded songs:', error);
       }
     };
+    
 
     fetchRequests();
     fetchUploadedSongs();

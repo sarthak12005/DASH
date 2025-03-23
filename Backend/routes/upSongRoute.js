@@ -47,12 +47,10 @@ router.get('/songs', authMiddleware, async (req, res) => {
   const songsDir = path.join(__dirname, '../uploads/songs/');
 
   try {
-    // Check if the folder exists
     if (!fs.existsSync(songsDir)) {
       return res.status(404).json({ message: 'Songs folder not found' });
     }
 
-    // Read songs from the folder
     const songs = fs.readdirSync(songsDir).map((file) => ({
       filename: file,
       url: `/uploads/songs/${file}`,
@@ -64,6 +62,7 @@ router.get('/songs', authMiddleware, async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
+
 
 
 // DELETE: Delete a song (Admin)
