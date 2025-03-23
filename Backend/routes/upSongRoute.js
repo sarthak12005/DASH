@@ -44,7 +44,13 @@ router.post('/upload', authMiddleware, upload.single('song'), async (req, res) =
 
 // GET: Fetch all uploaded songs
 router.get('/songs', authMiddleware, async (req, res) => {
-  const songsDir = path.join(__dirname, '../uploads/songs/');
+  const songsDir = path.join(process.cwd(), 'uploads/songs/');
+
+  if (!fs.existsSync(songsDir)) {
+    fs.mkdirSync(songsDir, { recursive: true });
+  }
+
+
 
   try {
     if (!fs.existsSync(songsDir)) {
