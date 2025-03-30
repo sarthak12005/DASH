@@ -31,7 +31,7 @@ const FakeHero = () => {
         </div> 
       </div>
       <div className="heroButton w-full h-45 bg-[#e1e10fc5] flex justify-center items-center">
-        <div className="h-btn w-[25%] h-[65%] flex flex-wrap gap-4 justify-center items-center">
+        <div className="h-btn w-[100%] h-[65%] flex flex-wrap gap-4 justify-center items-center md:w-[25%]">
           <button
             className="py-3 px-7 bg-[#FF69B4] rounded-3xl h-10 flex justify-center items-center shadow-pink-700 shadow-2xl"
             onClick={() => navigate('/tasks')} // ✅ Now it works!

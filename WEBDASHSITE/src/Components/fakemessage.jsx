@@ -2,7 +2,7 @@ import React from "react";
 
 const FakeMaessage = () => {
     return (
-        <div className="w-full min-h-screen flex items-center justify-center from-white to-[#ffff00] mt-16 p-4">
+        <div className="w-full min-h-screen flex items-center justify-center from-white to-[#ffff00] mt-3 p-4">
             <div className="max-w-3xl p-6 md:p-8 rounded-2xl shadow-lg text-center bg-yellow-200">
                 <h2 className="text-3xl md:text-4xl font-bold text-black">A Special Message</h2>
                 <p className="mt-4 md:mt-6 text-base md:text-lg text-gray-700 leading-relaxed">

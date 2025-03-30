@@ -54,8 +54,8 @@ const VideoComponent = () => {
   }, [category]);
 
   return (
-    <div className="w-full h-[86vh] mt-5 flex flex-col items-center justify-center bg-yellow-200 p-6">
-      <p className="mt-2 text-4xl font-bold text-black">Your daily video is here.</p>
+    <div className="w-full md:h-[86vh] mt-5 flex flex-col items-center justify-center bg-yellow-200 p-6 h-screen">
+      <p className="mt-2 md:text-4xl text-2xl font-bold text-black">Your daily video is here.</p>
       <div className="mt-4 flex gap-4">
         <button onClick={() => setCategory("Exercise")} className="px-4 py-2 bg-blue-500 text-white rounded-md">Exercise</button>
         <button onClick={() => setCategory("Bhajan")} className="px-4 py-2 bg-green-500 text-white rounded-md">Bhajan</button>
