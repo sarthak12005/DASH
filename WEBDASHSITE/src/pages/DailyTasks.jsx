@@ -17,11 +17,35 @@ const DailyTasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
-        const userId = decodedToken.userId; // Ensure userId exists in your token payload
+        const token = localStorage.getItem('accessToken');
+  
+        // Check if token exists
+        if (!token) {
+          console.error('No token found, redirecting to login.');
+          return; // Prevent further execution
+        }
+  
+        // Decode JWT safely
+        let decodedToken;
+        try {
+          decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
+        } catch (decodeError) {
+          console.error('Error decoding token:', decodeError);
+          return;
+        }
+  
+        const userId = decodedToken?.userId; // Ensure userId exists in your token payload
+        if (!userId) {
+          console.error('User ID not found in token.');
+          return;
+        }
+  
         const today = new Date().toISOString().split('T')[0]; // Get current date (YYYY-MM-DD)
   
+        // Ensure API_URL is correct
+        const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9000";
+  
+        // Fetch tasks
         const response = await axios.get(`${API_URL}/api/daily-tasks/${userId}/${today}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -31,19 +55,20 @@ const DailyTasks = () => {
       } catch (error) {
         console.error('Error fetching tasks:', error);
       } finally {
-         setLoading(false);
+        setLoading(false);
       }
     };
   
     fetchTasks();
   }, []);
   
+  
 
   // Mark task as completed
   const completeTask = async (index, taskId) => {
     try {
       // Ensure userId and today are properly defined
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('accessToken');
       const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
       const userId = decodedToken.userId; // Ensure userId exists in your token payload
       const today = new Date().toISOString().split('T')[0]; // Get current date (YYYY-MM-DD)
