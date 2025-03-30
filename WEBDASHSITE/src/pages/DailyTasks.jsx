@@ -41,7 +41,7 @@ const DailyTasks = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
   
-        console.log(response.data);
+        // console.log(response.data);
         setTasks(response.data.tasks);
       } catch (error) {
         console.error('Error fetching tasks:', error);
