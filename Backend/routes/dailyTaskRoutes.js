@@ -9,15 +9,16 @@ router.get('/:userId/:date', async (req, res) => {
   try {
     let dailyTask = await DailyTask.findOne({ userId, date });
 
-    // If no tasks for today, create default tasks
+    // ✅ If no tasks found, create an empty task list
     if (!dailyTask) {
-      dailyTask = new DailyTask({ userId, date });
+      dailyTask = new DailyTask({ userId, date, tasks: [] });
       await dailyTask.save();
     }
 
-    res.json(dailyTask);
+    res.json({ success: true, tasks: dailyTask.tasks });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching tasks', error });
+    console.error("Error fetching tasks:", error);
+    res.status(500).json({ message: "Error fetching tasks", error });
   }
 });
 
