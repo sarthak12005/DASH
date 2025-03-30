@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 
 const videoData = {
   Exercise: [
-    "/videos/exercise1.mp4",
+    "https://youtu.be/yqeirBfn2j4?si=WeOltg9YyCmUGoUv",
     "/videos/exercise2.mp4",
     "/videos/exercise3.mp4",
   ],
   Bhajan: [
-    "/videos/bhajan1.mp4",
+    "https://youtu.be/-A61THy1D1w?si=2M9tfboIPElEmYwv",
     "/videos/bhajan2.mp4",
     "/videos/bhajan3.mp4",
   ],
   Practice: [
-    "/videos/practice1.mp4",
+    "https://youtu.be/aRBzYEn7dhM?si=eCgRUyhx-_J0mOjK",
     "/videos/practice2.mp4",
     "/videos/practice3.mp4",
   ],
