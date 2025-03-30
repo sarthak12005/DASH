@@ -33,7 +33,7 @@ const VideoComponent = () => {
   }, [category]);
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center bg-yellow-200 p-6">
+    <div className="w-full h-[90vh] flex flex-col items-center justify-center bg-yellow-200 p-6">
       {/* <h2 className="text-4xl font-bold text-black">A Special Video</h2> */}
       <p className="mt-2 text-4xl font-bold text-black">Your daily video is here.</p>
       <div className="mt-4 flex gap-4">
