@@ -17,7 +17,7 @@ const DailyTasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('accessToken');
   
         // ✅ Check if token exists
         if (!token) {
