@@ -2,19 +2,40 @@ import React, { useState, useEffect } from "react";
 
 const videoData = {
   Exercise: [
-    "https://www.youtube.com/embed/yqeirBfn2j4",
+    "https://youtu.be/yqeirBfn2j4?si=WeOltg9YyCmUGoUv",
     "/videos/exercise2.mp4",
     "/videos/exercise3.mp4",
+    "/videos/exercise4.mp4",
+    "/videos/exercise5.mp4",
+    "/videos/exercise6.mp4",
+    "/videos/exercise7.mp4",
+    "/videos/exercise8.mp4",
+    "/videos/exercise9.mp4",
+    "/videos/exercise10.mp4",
   ],
   Bhajan: [
-    "https://www.youtube.com/embed/-A61THy1D1w",
+    "https://youtu.be/-A61THy1D1w?si=2M9tfboIPElEmYwv",
     "/videos/bhajan2.mp4",
     "/videos/bhajan3.mp4",
+    "/videos/bhajan4.mp4",
+    "/videos/bhajan5.mp4",
+    "/videos/bhajan6.mp4",
+    "/videos/bhajan7.mp4",
+    "/videos/bhajan8.mp4",
+    "/videos/bhajan9.mp4",
+    "/videos/bhajan10.mp4",
   ],
   Practice: [
-    "https://www.youtube.com/embed/aRBzYEn7dhM",
+    "https://youtu.be/aRBzYEn7dhM?si=eCgRUyhx-_J0mOjK",
     "/videos/practice2.mp4",
     "/videos/practice3.mp4",
+    "/videos/practice4.mp4",
+    "/videos/practice5.mp4",
+    "/videos/practice6.mp4",
+    "/videos/practice7.mp4",
+    "/videos/practice8.mp4",
+    "/videos/practice9.mp4",
+    "/videos/practice10.mp4",
   ],
 };
 
@@ -41,12 +62,11 @@ const VideoComponent = () => {
         <button onClick={() => setCategory("Practice")} className="px-4 py-2 bg-red-500 text-white rounded-md">Practice</button>
       </div>
       <div className="mt-6 w-full max-w-4xl">
-        {videoSrc.includes("youtube.com") ? (
+        {videoSrc.includes("youtu") ? (
           <iframe
             className="w-full h-[500px] rounded-xl shadow-md"
-            src={videoSrc}
-            title="YouTube Video"
-            frameBorder="0"
+            src={videoSrc.replace("youtu.be/", "www.youtube.com/embed/")}
+            title="YouTube video player"
             allowFullScreen
           ></iframe>
         ) : (
