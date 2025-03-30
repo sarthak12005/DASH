@@ -25,16 +25,16 @@ const DailyTasks = () => {
         }
   
         const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
-        console.log("✅ Decoded Token:", decodedToken);
+        
   
         const userId = decodedToken.id; // ✅ Use 'id' instead of 'userId'
   
         if (!userId) {
-          console.error("🚨 User ID not found in token payload:", decodedToken);
+          console.error("🚨 User ID not found in token payload:");
           return;
         }
   
-        console.log("✅ User ID extracted:", userId);
+        
         const today = new Date().toISOString().split('T')[0]; // Get current date (YYYY-MM-DD)
   
         const response = await axios.get(`${API_URL}/api/daily-tasks/${userId}/${today}`, {
