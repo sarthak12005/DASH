@@ -18,53 +18,31 @@ const DailyTasks = () => {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem('accessToken');
-  
-        // ✅ Check if token exists
+        
         if (!token) {
-          console.error('No token found, redirecting to login.');
+          console.error("🚨 No token found in localStorage.");
           return;
         }
   
-        console.log("Token from localStorage:", token);
+        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
+        console.log("✅ Decoded Token:", decodedToken);
   
-        // ✅ Decode JWT safely
-        let decodedToken;
-        try {
-          const tokenParts = token.split('.');
+        const userId = decodedToken.id; // ✅ Use 'id' instead of 'userId'
   
-          // ✅ Ensure JWT has 3 parts (header, payload, signature)
-          if (tokenParts.length !== 3) {
-            console.error("Invalid token format:", token);
-            return;
-          }
-  
-          decodedToken = JSON.parse(atob(tokenParts[1])); // Decode JWT payload
-          console.log("Decoded Token:", decodedToken); // Log to verify structure
-  
-        } catch (decodeError) {
-          console.error('Error decoding token:', decodeError);
-          return;
-        }
-  
-        const userId = decodedToken?.userId; // Ensure `userId` exists
         if (!userId) {
-          console.error("User ID not found in token.");
+          console.error("🚨 User ID not found in token payload:", decodedToken);
           return;
         }
   
+        console.log("✅ User ID extracted:", userId);
         const today = new Date().toISOString().split('T')[0]; // Get current date (YYYY-MM-DD)
   
-        // ✅ Ensure API_URL is correctly set
-        const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
-  
-        // ✅ Fetch tasks from backend
         const response = await axios.get(`${API_URL}/api/daily-tasks/${userId}/${today}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
   
-        console.log("Tasks received:", response.data);
+        console.log(response.data);
         setTasks(response.data.tasks);
-        
       } catch (error) {
         console.error('Error fetching tasks:', error);
       } finally {
@@ -74,6 +52,7 @@ const DailyTasks = () => {
   
     fetchTasks();
   }, []);
+  
   
   
   

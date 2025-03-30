@@ -12,7 +12,7 @@ router.get('/:userId/:date', async (req, res) => {
     // ✅ If no tasks found, create an empty task list
     if (!dailyTask) {
       dailyTask = new DailyTask({ userId, date, tasks: [] });
-      await dailyTask.save();
+      await dailyTask.save(); 
     }
 
     res.json({ success: true, tasks: dailyTask.tasks });
