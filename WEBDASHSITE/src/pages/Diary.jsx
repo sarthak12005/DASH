@@ -30,6 +30,7 @@ const Diary = () => {
 
   const addEntry = () => {
     const Token = localStorage.getItem("accessToken");
+    console.log(Token, newEntry);
     if (Token && newEntry.trim() !== "") {
       axios.post(
         `${API_URL}/api/diary`,

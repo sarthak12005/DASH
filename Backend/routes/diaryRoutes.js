@@ -6,9 +6,9 @@ const DiaryEntry = require('../module/DiaryEntry');
 const authMiddleware = require('../middleware/auth');
 
 // 📝 1. Add a new diary entry
-router.post('/', authenticate, async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   const { date, title, content } = req.body;
-  const userId = req.user.id;  // Assuming req.user is set by your auth middleware
+  const userId = req.user.userId;  // Assuming req.user is set by your auth middleware
 
   try {
     const newEntry = new DiaryEntry({ userId, date, title, content });
@@ -20,8 +20,8 @@ router.post('/', authenticate, async (req, res) => {
 });
 
 // 📖 2. Get all diary entries for the logged-in user
-router.get('/', authenticate, async (req, res) => {
-  const userId = req.user.id;
+router.get('/', authMiddleware, async (req, res) => {
+  const userId = req.user.userId;
   try {
     const entries = await DiaryEntry.find({ userId }).sort({ date: -1 });
     res.json(entries);
@@ -30,14 +30,14 @@ router.get('/', authenticate, async (req, res) => {
   }
 });
 
-router.get('/all', authenticate, async (req, res) => {
+router.get('/all', authMiddleware, async (req, res) => {
   const entries = await DiaryEntry.find();
   res.json(entries);
 })
 
 // 📅 3. Get a specific diary entry by date
-router.get('/:date', authenticate, async (req, res) => {
-  const userId = req.user.id;
+router.get('/:date', authMiddleware, async (req, res) => {
+  const userId = req.user.userId;
   const { date } = req.params;
 
   try {
@@ -50,8 +50,8 @@ router.get('/:date', authenticate, async (req, res) => {
 });
 
 // ✏️ 4. Update a diary entry by date
-router.put('/:date', authenticate, async (req, res) => {
-  const userId = req.user.id;
+router.put('/:date', authMiddleware, async (req, res) => {
+  const userId = req.user.userId;
   const { date } = req.params;
   const { title, content } = req.body;
 
@@ -69,7 +69,7 @@ router.put('/:date', authenticate, async (req, res) => {
 });
 
 // 🗑️ 5. Delete a diary entry by date
-router.delete("/:id", authenticate, async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   const { id } = req.params;
   try {
     const entry = await DiaryEntry.findByIdAndDelete(id);
