@@ -1,37 +1,27 @@
 const express = require('express');
 const SongRequest = require('../module/SongRequest');
 const router = express.Router();
-const authMiddleware = require('../middleware/auth'); // Ensure you have this middleware to verify tokens
+const authMiddleware = require('../middleware/auth');
 
 // POST: Create a new song request
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const userId = req.user.userId;
+    const userId = req.user.userId; // ✅ FIXED destructuring
     const { songs } = req.body;
-
-    console.log("USER ID:", userId);        // Debugging
-    console.log("SONGS RECEIVED:", songs);  // Debugging
 
     if (!Array.isArray(songs) || songs.length === 0) {
       return res.status(400).json({ message: 'Songs must be an array with at least one song' });
     }
 
-    const newRequest = new SongRequest({
-      userId,
-      songs
-    });
-
+    const newRequest = new SongRequest({ userId, songs });
     await newRequest.save();
-
-    console.log("NEW REQUEST SAVED:", newRequest); // Debugging
 
     res.status(201).json(newRequest);
   } catch (error) {
-    console.error("Error in POST /api/songs:", error);
+    console.error("POST /api/songs Error:", error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
-
 
 // GET: Fetch all song requests (For admin)
 router.get('/', authMiddleware, async (req, res) => {
@@ -39,7 +29,7 @@ router.get('/', authMiddleware, async (req, res) => {
     const requests = await SongRequest.find().populate('userId', 'email');
     res.json(requests);
   } catch (error) {
-    console.error(error);
+    console.error("GET /api/songs Error:", error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
@@ -51,7 +41,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     await SongRequest.findByIdAndDelete(id);
     res.json({ message: 'Request deleted successfully' });
   } catch (error) {
-    console.error(error);
+    console.error("DELETE /api/songs/:id Error:", error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
