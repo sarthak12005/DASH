@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const DailyTask = require('../module/DailyTask');
+const authMiddleware = require('../middleware/auth');
 
 // Fetch tasks for a specific user and date
-router.get('/:userId/:date', async (req, res) => {
-  const { userId, date } = req.params;
+router.get('/:date',authMiddleware, async (req, res) => {
+  const {userId} = req.user;
+  const { date } = req.params;
 
   try {
     let dailyTask = await DailyTask.findOne({ userId, date });
@@ -46,8 +48,9 @@ router.post('/', async (req, res) => {
 });
 
 // Mark task as completed
-router.put('/:userId/:date/:taskId', async (req, res) => {
-  const { userId, date, taskId } = req.params;
+router.put('/:date/:taskId',authMiddleware, async (req, res) => {
+  const { date, taskId } = req.params;
+  const {userId} = req.usr;
 
   try {
     const dailyTask = await DailyTask.findOne({ userId, date });
@@ -70,6 +73,6 @@ router.put('/:userId/:date/:taskId', async (req, res) => {
   }
 });
 
-router()
+
 
 module.exports = router;
