@@ -45,13 +45,19 @@ const SongCenter = () => {
 
   const addRequest = async () => {
     if (newRequest.trim()) {
+      console.log("🔼 Sending song request:", {
+        token,
+        songs: [newRequest]
+      });
+
       try {
+
         const res = await axios.post(
           `${API_URL}/api/songs`,
           { songs: [newRequest] },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        
+
         setSongRequests([...songRequests, res.data]);
         setUploadedSongs([...uploadedSongs, newRequest]);
         setNewRequest("");
