@@ -51,6 +51,7 @@ const SongCenter = () => {
           { songs: [newRequest] },
           { headers: { Authorization: `Bearer ${token}` } }
         );
+        
         setSongRequests([...songRequests, res.data]);
         setUploadedSongs([...uploadedSongs, newRequest]);
         setNewRequest("");
