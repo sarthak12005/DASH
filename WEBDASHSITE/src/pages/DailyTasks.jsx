@@ -24,20 +24,20 @@ const DailyTasks = () => {
           return;
         }
   
-        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
+        // const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
         
   
-        const userId = decodedToken.id; // ✅ Use 'id' instead of 'userId'
+        // const userId = decodedToken.id; // ✅ Use 'id' instead of 'userId'
   
-        if (!userId) {
-          console.error("🚨 User ID not found in token payload:");
-          return;
-        }
+        // if (!userId) {
+        //   console.error("🚨 User ID not found in token payload:");
+        //   return;
+        // }
   
         
         const today = new Date().toISOString().split('T')[0]; // Get current date (YYYY-MM-DD)
   
-        const response = await axios.get(`${API_URL}/api/daily-tasks/${userId}/${today}`, {
+        const response = await axios.get(`${API_URL}/api/daily-tasks/${today}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
   
@@ -62,12 +62,12 @@ const DailyTasks = () => {
     try {
       // Ensure userId and today are properly defined
       const token = localStorage.getItem('accessToken');
-      const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
-      const userId = decodedToken.userId; // Ensure userId exists in your token payload
+      // const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
+      // const userId = decodedToken.userId; // Ensure userId exists in your token payload
       const today = new Date().toISOString().split('T')[0]; // Get current date (YYYY-MM-DD)
   
       // Fix URL: add '/' between daily-tasks and userId
-      await axios.put(`${API_URL}/api/daily-tasks/${userId}/${today}/${taskId}`, {}, {
+      await axios.put(`${API_URL}/api/daily-tasks/${today}/${taskId}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
   
