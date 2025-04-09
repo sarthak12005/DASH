@@ -26,6 +26,7 @@ const Home = () => {
       const { accessToken, refreshToken, role } = response.data;
 
       localStorage.setItem("accessToken", accessToken);
+      console.log(localStorage.getItem('accessToken'));
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("role", role);
 

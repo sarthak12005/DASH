@@ -9,6 +9,9 @@ router.post('/', authMiddleware, async (req, res) => {
     const userId = req.user.userId;
     const { songs } = req.body;
 
+    console.log("USER ID:", userId);        // Debugging
+    console.log("SONGS RECEIVED:", songs);  // Debugging
+
     if (!Array.isArray(songs) || songs.length === 0) {
       return res.status(400).json({ message: 'Songs must be an array with at least one song' });
     }
@@ -19,12 +22,16 @@ router.post('/', authMiddleware, async (req, res) => {
     });
 
     await newRequest.save();
+
+    console.log("NEW REQUEST SAVED:", newRequest); // Debugging
+
     res.status(201).json(newRequest);
   } catch (error) {
-    console.error(error);
+    console.error("Error in POST /api/songs:", error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
 
 // GET: Fetch all song requests (For admin)
 router.get('/', authMiddleware, async (req, res) => {
