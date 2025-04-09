@@ -13,10 +13,10 @@ const Diary = () => {
   const [selectedEntry, setSelectedEntry] = useState(null);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
+    const Token = localStorage.getItem("accessToken");
+    if (Token) {
       axios.get(`${API_URL}/api/diary`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${Token}` },
       })
       .then((response) => setEntries(response.data))
       .catch((error) => {
@@ -29,8 +29,8 @@ const Diary = () => {
   }, []);
 
   const addEntry = () => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken && newEntry.trim() !== "") {
+    const Token = localStorage.getItem("accessToken");
+    if (Token && newEntry.trim() !== "") {
       axios.post(
         `${API_URL}/api/diary`,
         {
@@ -39,7 +39,7 @@ const Diary = () => {
           content: newEntry,
         },
         {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${Token}` },
         }
       )
       .then((response) => {
@@ -58,9 +58,9 @@ const Diary = () => {
   
 
   const deleteEntry = (id) => {
-    const accessToken = localStorage.getItem("accessToken");
+    const Token = localStorage.getItem("accessToken");
     axios.delete(`${API_URL}/api/diary/${id}`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
+      headers: { Authorization: `Bearer ${Token}` },
     })
     .then(() => {
       setEntries(entries.filter((entry) => entry._id !== id));
