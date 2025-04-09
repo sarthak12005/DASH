@@ -3,26 +3,31 @@ const router = express.Router();
 const SongRequest = require('../module/SongRequest');
 const authMiddleware = require('../middleware/auth');
 
-// POST: Create a new song request
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const userId = req.user.userId;
+    console.log("🔵 POST /api/songs called");
+    console.log("🔐 req.user:", req.user);
+    const {userId} = req.user;
+    
     const { songs } = req.body;
+    console.log("🎵 songs from req.body:", songs);
 
     if (!Array.isArray(songs) || songs.length === 0) {
+      console.log("❌ Invalid songs array");
       return res.status(400).json({ message: 'Songs must be an array with at least one song' });
     }
 
     const newRequest = new SongRequest({ userId, songs });
     await newRequest.save();
 
+    console.log("✅ New request saved:", newRequest);
     res.status(201).json(newRequest);
   } catch (error) {
-    console.error("POST /api/songs Error:", error.message);
-    console.error(error); // FULL error including stack trace
+    console.error("🔥 Error in POST /api/songs:", error.message);
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
+
 
 
 // GET: Fetch all song requests (For admin)
