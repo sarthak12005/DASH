@@ -6,7 +6,7 @@ const authMiddleware = require('../middleware/auth'); // Ensure you have this mi
 // POST: Create a new song request
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const {userId} = req.user.userId;
+    const userId = req.user.userId;
     const { songs } = req.body;
 
     if (!Array.isArray(songs) || songs.length === 0) {
