@@ -30,30 +30,42 @@ const Diary = () => {
 
   const addEntry = () => {
     const Token = localStorage.getItem("accessToken");
-    console.log(Token, newEntry);
+    console.log("Access Token:", Token);
+    console.log("New Diary Entry:", newEntry);
+  
     if (Token && newEntry.trim() !== "") {
-      axios.post(
-        `${API_URL}/api/diary`,
-        {
-          date: new Date().toISOString(),
-          title: "New Entry",  // You can make this dynamic if needed
-          content: newEntry,
+      const entryData = {
+        date: new Date().toISOString(),
+        title: "New Entry", // You can customize or make this dynamic
+        content: newEntry,
+      };
+  
+      console.log("Sending to backend:", entryData);
+  
+      axios.post(`${API_URL}/api/diary`, entryData, {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+          "Content-Type": "application/json",
         },
-        {
-          headers: { Authorization: `Bearer ${Token}` },
-        }
-      )
-      .then((response) => {
-        setEntries([...entries, response.data]);
-        setNewEntry("");
-        setShowModal(false);
       })
-      .catch((error) => {
-        console.error("Error adding entry:", error);
-        if (error.response) {
-          console.error("Response data:", error.response.data);
-        }
-      });
+        .then((response) => {
+          console.log("Diary entry saved:", response.data);
+          setEntries([...entries, response.data]);
+          setNewEntry("");
+          setShowModal(false);
+        })
+        .catch((error) => {
+          console.error("❌ Error adding entry:", error);
+  
+          if (error.response) {
+            console.error("🚨 Server Response:", error.response.data);
+            alert("Server Error: " + error.response.data.error);
+          } else {
+            alert("An unexpected error occurred.");
+          }
+        });
+    } else {
+      alert("Entry cannot be empty or missing token.");
     }
   };
   

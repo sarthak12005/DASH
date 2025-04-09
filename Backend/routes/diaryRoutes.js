@@ -5,19 +5,22 @@ const DiaryEntry = require('../module/DiaryEntry');
 // 📌 Middleware to check authentication (Add this if you have JWT auth)
 const authMiddleware = require('../middleware/auth');
 
-// 📝 1. Add a new diary entry
 router.post('/', authMiddleware, async (req, res) => {
   const { date, title, content } = req.body;
-  const userId = req.user.userId;  // Assuming req.user is set by your auth middleware
+  const userId = req.user.userId;
+
+  console.log("Incoming Diary Entry:", { userId, date, title, content });
 
   try {
     const newEntry = new DiaryEntry({ userId, date, title, content });
     await newEntry.save();
     res.status(201).json(newEntry);
   } catch (err) {
-    res.status(500).json({ error: 'Error adding entry' });
+    console.error("Error adding diary entry:", err); // 🔍 See exact error in Render logs
+    res.status(500).json({ error: 'Error adding entry', message: err.message });
   }
 });
+
 
 // 📖 2. Get all diary entries for the logged-in user
 router.get('/', authMiddleware, async (req, res) => {
