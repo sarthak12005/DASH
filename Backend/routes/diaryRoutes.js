@@ -3,7 +3,7 @@ const router = express.Router();
 const DiaryEntry = require('../module/DiaryEntry');
 
 // 📌 Middleware to check authentication (Add this if you have JWT auth)
-const authenticate = require('../middleware/auth');
+const authMiddleware = require('../middleware/auth');
 
 // 📝 1. Add a new diary entry
 router.post('/', authenticate, async (req, res) => {
