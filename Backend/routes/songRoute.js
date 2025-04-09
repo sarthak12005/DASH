@@ -7,7 +7,7 @@ router.post('/', authMiddleware, async (req, res) => {
   try {
     console.log("🔵 POST /api/songs called");
     console.log("🔐 req.user:", req.user);
-    const {userId} = req.user;
+    const userId = req.user.id;
     
     const { songs } = req.body;
     console.log("🎵 songs from req.body:", songs);
