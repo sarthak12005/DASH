@@ -4,6 +4,7 @@ import { API_URL } from "../config";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlusCircle, Trash2, Eye } from "lucide-react";
 import Navbar from "../Components/navbar";
+import { format } from 'date-fns';
 import Footer from "../Components/footer";
 
 const Diary = () => {
