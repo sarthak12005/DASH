@@ -11,7 +11,8 @@ const diarySchema = new mongoose.Schema({
     required: true
   },
   title: String,
-  content: String
+  content: String,
+  seen:{type: Boolean, default: false},
 });
 
 module.exports = mongoose.model('DiaryEntry', diarySchema);

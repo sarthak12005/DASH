@@ -4,6 +4,7 @@ import { API_URL } from "../config";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlusCircle, Trash2, Eye } from "lucide-react";
 import Navbar from "../Components/navbar";
+import { LiaCheckDoubleSolid } from "react-icons/lia";
 import { format } from 'date-fns';
 import Footer from "../Components/footer";
 
@@ -19,13 +20,13 @@ const Diary = () => {
       axios.get(`${API_URL}/api/diary`, {
         headers: { Authorization: `Bearer ${Token}` },
       })
-      .then((response) => setEntries(response.data))
-      .catch((error) => {
-        console.error("Error fetching diary entries:", error);
-        if (error.response) {
-          console.error("Response data:", error.response.data);
-        }
-      });
+        .then((response) => setEntries(response.data))
+        .catch((error) => {
+          console.error("Error fetching diary entries:", error);
+          if (error.response) {
+            console.error("Response data:", error.response.data);
+          }
+        });
     }
   }, []);
 
@@ -33,16 +34,16 @@ const Diary = () => {
     const Token = localStorage.getItem("accessToken");
     console.log("Access Token:", Token);
     console.log("New Diary Entry:", newEntry);
-  
+
     if (Token && newEntry.trim() !== "") {
       const entryData = {
         date: new Date().toISOString(),
         title: "New Entry", // You can customize or make this dynamic
         content: newEntry,
       };
-  
+
       console.log("Sending to backend:", entryData);
-  
+
       axios.post(`${API_URL}/api/diary`, entryData, {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -57,7 +58,7 @@ const Diary = () => {
         })
         .catch((error) => {
           console.error("❌ Error adding entry:", error);
-  
+
           if (error.response) {
             console.error("🚨 Server Response:", error.response.data);
             alert("Server Error: " + error.response.data.error);
@@ -69,24 +70,24 @@ const Diary = () => {
       alert("Entry cannot be empty or missing token.");
     }
   };
-  
+
 
   const deleteEntry = (id) => {
     const Token = localStorage.getItem("accessToken");
     axios.delete(`${API_URL}/api/diary/${id}`, {
       headers: { Authorization: `Bearer ${Token}` },
     })
-    .then(() => {
-      setEntries(entries.filter((entry) => entry._id !== id));
-    })
-    .catch((error) => {
-      console.error("Error deleting entry:", error);
-      if (error.response) {
-        console.error("Response data:", error.response.data);
-      }
-    });
+      .then(() => {
+        setEntries(entries.filter((entry) => entry._id !== id));
+      })
+      .catch((error) => {
+        console.error("Error deleting entry:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+        }
+      });
   };
-  
+
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
@@ -103,9 +104,12 @@ const Diary = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.3 }}
-                  className="p-5 h-[250px] bg-white rounded-lg shadow-md flex flex-col justify-between transition-all hover:bg-pink-50"
+                  className="p-5 h-[250px] bg-white rounded-lg shadow-md flex flex-col justify-between transition-all hover:bg-pink-50 relative"
                 >
-                  <h3 className="text-lg font-semibold text-gray-700">{new Date(entry.createdAt).toLocaleDateString()}</h3>
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    {entry?.date ? format(new Date(entry.date), 'dd MMM yyyy') : 'Invalid Date'}
+                  </h3>
+
                   <button
                     onClick={() => setSelectedEntry(entry)}
                     className="mt-2 w-[88px] bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition-all flex items-center justify-center"
@@ -118,6 +122,14 @@ const Diary = () => {
                   >
                     <Trash2 size={20} />
                   </button>
+                  <div className="absolute  bottom-2 right-2">
+                    {!entry.seen && (
+                      <LiaCheckDoubleSolid size={24} className="text-gray-500" />
+                    )}
+                    {entry.seen && (
+                      <LiaCheckDoubleSolid size={24} className="text-blue-600" />
+                    )}
+                  </div>
                 </motion.div>
               ))
             ) : (

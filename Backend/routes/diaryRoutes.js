@@ -53,23 +53,22 @@ router.get('/:date', authMiddleware, async (req, res) => {
 });
 
 // ✏️ 4. Update a diary entry by date
-router.put('/:date', authMiddleware, async (req, res) => {
-  const userId = req.user.userId;
-  const { date } = req.params;
-  const { title, content } = req.body;
-
+router.put(`/:id`, authMiddleware, async (req, res) => {
   try {
-    const updatedEntry = await DiaryEntry.findOneAndUpdate(
-      { userId, date },
-      { title, content },
-      { new: true }
-    );
-    if (!updatedEntry) return res.status(404).json({ message: 'Entry not found' });
-    res.json(updatedEntry);
-  } catch (err) {
-    res.status(500).json({ error: 'Error updating entry' });
+    const { id } = req.params.id; // ✅ match the route
+    const diary = await DiaryEntry.findByIdAndUpdate(id, req.body, { new: true });
+
+
+    if (!diary) {
+      res.status(404).json({ message: "Diary not found" });
+    }
+
+    res.status(200).json({ message: "Diary updated successfully", diary });
+
+  } catch (error) {
+    res.status(500).json({ message: "Error updating diary entry" });
   }
-});
+})
 
 // 🗑️ 5. Delete a diary entry by date
 router.delete("/:id", authMiddleware, async (req, res) => {
