@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 const Admin = () => { 
 
     const [role, setRole] = useState(null);
-    const [email, setEmail] = useState(null);
+    
 
     useEffect(() => {
         const userRole = localStorage.getItem('role');
