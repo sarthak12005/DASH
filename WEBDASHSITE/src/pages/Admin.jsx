@@ -15,7 +15,7 @@ const Admin = () => {
         const userRole = localStorage.getItem('role');
         const userEmail = localStorage.getItem('email');
         setRole(userRole);
-        setEmail(userEmail);
+        
     },[])
 
 
