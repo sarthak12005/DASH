@@ -2,13 +2,17 @@ import { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [role, setRole] = useState(null);
+  const [email, setEmail] = useState(null);
 
   useEffect(() => {
     const userRole = localStorage.getItem("role");
+    const userEmail = localStorage.getItem('email');
     setRole(userRole);
+    setEmail(userEmail);
   }, []);
 
   return (
@@ -47,6 +51,19 @@ const Navbar = () => {
                 </Link>
               </motion.div>
             )}
+            {email === "dash2006@gmail.com" && (
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Link
+                  to="/admin"
+                  className="text-gray-700 font-medium hover:text-black transition"
+                >
+                  Admin
+                </Link>
+              </motion.div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -71,6 +88,15 @@ const Navbar = () => {
               </Link>
             ))}
             {role === "admin" && (
+              <Link
+                to="/admin"
+                className="text-gray-700 font-medium py-2 hover:text-pink-500 transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Admin
+              </Link>
+            )}
+            {email === "dash2006@gmail.com" && (
               <Link
                 to="/admin"
                 className="text-gray-700 font-medium py-2 hover:text-pink-500 transition"
