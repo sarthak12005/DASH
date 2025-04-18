@@ -23,13 +23,14 @@ const Home = () => {
         email,
         password,
       });
-      const { accessToken, refreshToken, role, email } = response.data;
+      const { accessToken, refreshToken, role, userEmail } = response.data;
 
       localStorage.setItem("accessToken", accessToken);
       console.log(localStorage.getItem('accessToken'));
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("role", role);
-      localStorage.setItem("email", email);
+      localStorage.setItem("email", userEmail);
+      console.log(localStorage.getItem('email'));
 
       setLogin(true);
 
