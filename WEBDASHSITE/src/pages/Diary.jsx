@@ -119,7 +119,7 @@ const Diary = () => {
                     onClick={() => setSelectedEntry(entry)}
                     className="mt-2 w-[88px] bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition-all flex items-center justify-center"
                   >
-                    <Eye size={20} className="mr-1" /> View
+                    <Eye size={20} className="mr-1"/> View
                   </button>
                   <button
                     onClick={() => deleteEntry(entry._id)}

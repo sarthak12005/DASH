@@ -58,17 +58,17 @@ const DiaryManagement = () => {
   }, [entries]);
 
   return (
-    <div className="bg-gradient-to-r from-purple-100 to-purple-200 md:p-20 rounded-2xl shadow-lg mt-25 mb-10 w-screen">
+    <div className="bg-gradient-to-r from-purple-100 to-purple-200 md:p-10 rounded-2xl shadow-lg mt-25 mb-10 w-screen">
       <h2 className="text-3xl font-bold text-black mb-4 text-center">Diary Management</h2>
       <div className="buttons w-full flex justify-start gap-5 items-center p-5 ">
         <button className="px-3.5 py-2.5 bg-white text-black rounded-4xl " onClick={() => setBlock(true)}>Seen</button>
         <button className="px-3.5 py-2.5 bg-white text-black rounded-4xl " onClick={() => setBlock(false)}>Unseen</button>
       </div>
-      <ul className={`space-y-2 ${email === 'dash2006@gmail.com' ? "max-h-[95vh]" : "max-h-96"} overflow-y-auto p-5  w-[95vw] md:w-[90vw] lg:w-[80vw] xl:w-[70vw] 2xl:w-[60vw]`}>
+      <ul className={`space-y-2 ${email === 'dash2006@gmail.com' ? "max-h-[95vh]" : "max-h-96"} overflow-y-auto overflow-x-hidden p-5  w-screen md:w-[100%]`}>
         {block ? (
           <>
             {seen.map((entry, index) => (
-              <li key={index} className="bg-pink-50 p-4 rounded-md relative w-[100%] md:w-[100%] lg:w-[70vw] xl:w-[60vw] 2xl:w-[50vw]">
+              <li key={index} className="bg-pink-50 p-4 rounded-md relative w-[96%] md:w-full">
                 <h4 className="font-bold text-lg">{entry.title}</h4>
                 <p className="text-sm text-gray-600 mb-2">{new Date(entry.date).toLocaleDateString()}</p>
                 <p className="text-sm text-gray-600 mb-2">{entry?.date ? format(new Date(entry.date), 'hh:mm a') : "Invalid Time"}</p>
