@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
 // Mark task as completed
 router.put('/:date/:taskId',authMiddleware, async (req, res) => {
   const { date, taskId } = req.params;
-  const {userId} = req.usr;
+  const userId = req.user.userId;
 
   try {
     const dailyTask = await DailyTask.findOne({ userId, date });

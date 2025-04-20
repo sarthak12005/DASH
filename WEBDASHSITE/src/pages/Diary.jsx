@@ -13,6 +13,7 @@ const Diary = () => {
   const [newEntry, setNewEntry] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(null);
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     const Token = localStorage.getItem("accessToken");
@@ -38,7 +39,7 @@ const Diary = () => {
     if (Token && newEntry.trim() !== "") {
       const entryData = {
         date: new Date().toISOString(),
-        title: "New Entry", // You can customize or make this dynamic
+        title: title, // You can customize or make this dynamic
         content: newEntry,
       };
 
@@ -110,6 +111,10 @@ const Diary = () => {
                     {entry?.date ? format(new Date(entry.date), 'dd MMM yyyy') : 'Invalid Date'}
                   </h3>
 
+                  <h3 className="text-[18px] font-semibold text-gray-700">
+                    {entry?.date ? format(new Date(entry.date), 'hh:mm a') : 'Invalid Time'}
+                  </h3>
+
                   <button
                     onClick={() => setSelectedEntry(entry)}
                     className="mt-2 w-[88px] bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition-all flex items-center justify-center"
@@ -152,9 +157,13 @@ const Diary = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center w-96"
+            className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center w-96 gap-1.5"
           >
             <h3 className="text-xl font-bold mb-4">Write Your Diary</h3>
+            <input type="text" name="title" id="title" placeholder="Enter the Title of the Diary" className="w-full h-10 px-4 py-2 border rounded-md focus:ring-2 focus:ring-pink-400 transition-all"
+             onChange={(e) => setTitle(e.target.value)}
+             value={title}
+            />
             <textarea
               value={newEntry}
               onChange={(e) => setNewEntry(e.target.value)}
