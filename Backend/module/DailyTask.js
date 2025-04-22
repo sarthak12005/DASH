@@ -15,7 +15,7 @@ const dailyTaskSchema = new mongoose.Schema({
 // Pre-save hook to add default tasks if none exist
 dailyTaskSchema.pre('save', function (next) {
   const defaultTasks = [
-    "Wake up at 5:30 AM",
+    "Wake up at 5.30 am at morning",
     "Drink 2 glasses of water",
     "Exercise for 15 minutes",
     "Meditation for 10 minutes",
@@ -28,6 +28,7 @@ dailyTaskSchema.pre('save', function (next) {
     "Sleep 2 hours",
     "Study session 2 hours",
     "Drink plenty of water",
+    "Dinner",
     "Sleep before 11:30 PM"
   ];
 
