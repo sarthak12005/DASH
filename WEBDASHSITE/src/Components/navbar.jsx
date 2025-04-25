@@ -24,7 +24,7 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6">
-            {["Home", "Tasks", "Solutions", "DailyTasks", "Diary", "Study"].map((item, index) => (
+            {["Home", "Tasks", "Solutions", "DailyTasks", "Diary", "Study", "Song"].map((item, index) => (
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.1 }}

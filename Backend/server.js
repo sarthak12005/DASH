@@ -8,6 +8,7 @@ const songRoutes = require('./routes/songRoute');
 const dailyTaskRoutes = require('./routes/dailyTaskRoutes');
 const diaryRoutes = require('./routes/diaryRoutes');
 const upSongRoutes = require('./routes/upSongRoute');
+const songUploadRoutes = require('./routes/songUploadRoute');
 
 
 const PORT = process.env.PORT || 9000;
@@ -29,6 +30,7 @@ app.use('/api/songs', songRoutes);
 app.use('/api/daily-tasks', dailyTaskRoutes);
 app.use('/api/diary', diaryRoutes);
 app.use('/api/Up-Song', upSongRoutes);
+app.use('/api', songUploadRoutes);
 
 app.get('/', (req, res) => {
     res.send("Welcome to the DASH backend");
