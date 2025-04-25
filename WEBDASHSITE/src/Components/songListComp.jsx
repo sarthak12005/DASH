@@ -22,7 +22,7 @@ const SongListComp = () => {
     useEffect(() => {
         const fetchSongs = async () => {
             try {
-                const response = await axios.get('http://localhost:9000/api/real-songs', {
+                const response = await axios.get(`${API_URL}/api/real-songs`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`
                     }
