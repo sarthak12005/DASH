@@ -34,7 +34,7 @@ const SongListComp = () => {
                 const formattedSongs = response.data.map(song => ({
                     id: song._id,
                     title: song.title,
-                    artist: song.artist || 'Unknown Artist',
+                    artist: song.artist || 'Bunny',
                     coverImage: song.imageUrl,
                     audioUrl: song.audioUrl,
                     createdAt: song.createdAt
