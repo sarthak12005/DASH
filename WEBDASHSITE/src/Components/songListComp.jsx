@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaDownload, FaHeart, FaRegHeart } from 'react-icons/fa';
 import { IoMdMusicalNote } from 'react-icons/io';
 import axios from 'axios';
+import { API_URL } from "../config";
 
 const SongListComp = () => {
     // All hooks declared at the top (no conditional hooks)
@@ -165,132 +166,132 @@ const SongListComp = () => {
 
     return (
         <div className="flex flex-col h-screen bg-gradient-to-b from-yellow-400 to-yellow-600 text-white">
-        {/* Main Content */}
-        <div className="flex-1 overflow-y-auto pb-32">
-            <div className="container mx-auto px-4 py-8">
-                <h1 className="text-4xl font-bold mb-8 text-center">Your Music Library</h1>
-                {/* Songs List */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto">
-                    {songs.map((song) => (
-                        <div
-                            key={song.id}
-                            className={`bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-all duration-300 hover:bg-white/20 cursor-pointer ${currentSong?.id === song.id ? 'ring-2 ring-indigo-400' : ''}`}
-                            onClick={() => playSong(song)}
-                            style={{ minWidth: '200px', flex: '0 0 auto' }} // Ensure consistent width for horizontal scrolling
-                        >
-                            <div className="flex items-start gap-4">
-                                <div className="relative">
-                                    <img
-                                        src={song.coverImage}
-                                        alt={song.title}
-                                        className="w-24 h-24 rounded-lg object-cover"
-                                    />
-                                    {currentSong?.id === song.id && isPlaying && (
-                                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-lg">
-                                            <IoMdMusicalNote className="text-white animate-pulse text-xl" />
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="text-lg font-semibold line-clamp-1">{song.title}</h3>
-                                    <p className="text-sm text-white/80 mb-2">{song.artist}</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-2">
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            toggleFavorite(song.id);
-                                        }}
-                                        className="text-lg hover:scale-110 transition-transform"
-                                    >
-                                        {favorites.includes(song.id) ? (
-                                            <FaHeart className="text-red-500" />
-                                        ) : (
-                                            <FaRegHeart className="text-white/70 hover:text-red-500" />
+            {/* Main Content */}
+            <div className="flex-1 overflow-y-auto pb-32">
+                <div className="container mx-auto px-4 py-8">
+                    <h1 className="text-4xl font-bold mb-8 text-center">Your Music Library</h1>
+                    {/* Songs List */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto">
+                        {songs.map((song) => (
+                            <div
+                                key={song.id}
+                                className={`bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-all duration-300 hover:bg-white/20 cursor-pointer ${currentSong?.id === song.id ? 'ring-2 ring-indigo-400' : ''}`}
+                                onClick={() => playSong(song)}
+                                style={{ minWidth: '200px', flex: '0 0 auto' }} // Ensure consistent width for horizontal scrolling
+                            >
+                                <div className="flex items-start gap-4">
+                                    <div className="relative">
+                                        <img
+                                            src={song.coverImage}
+                                            alt={song.title}
+                                            className="w-24 h-24 rounded-lg object-cover"
+                                        />
+                                        {currentSong?.id === song.id && isPlaying && (
+                                            <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-lg">
+                                                <IoMdMusicalNote className="text-white animate-pulse text-xl" />
+                                            </div>
                                         )}
-                                    </button>
-                                    <a
-                                        href={song.audioUrl}
-                                        download
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="text-lg text-white/70 hover:text-indigo-300 transition-colors"
-                                    >
-                                        <FaDownload />
-                                    </a>
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-semibold line-clamp-1">{song.title}</h3>
+                                        <p className="text-sm text-white/80 mb-2">{song.artist}</p>
+                                    </div>
+                                    <div className="flex flex-col items-center gap-2">
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                toggleFavorite(song.id);
+                                            }}
+                                            className="text-lg hover:scale-110 transition-transform"
+                                        >
+                                            {favorites.includes(song.id) ? (
+                                                <FaHeart className="text-red-500" />
+                                            ) : (
+                                                <FaRegHeart className="text-white/70 hover:text-red-500" />
+                                            )}
+                                        </button>
+                                        <a
+                                            href={song.audioUrl}
+                                            download
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="text-lg text-white/70 hover:text-indigo-300 transition-colors"
+                                        >
+                                            <FaDownload />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
-        {/* Player Bar */}
-        {currentSong && (
-            <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-yellow-500 to-yellow-700 p-4 shadow-lg">
-                <div className="container mx-auto flex flex-col md:flex-row items-center gap-4">
-                    {/* Song Info */}
-                    <div className="flex items-center gap-4 flex-1 min-w-0">
-                        <img
-                            src={currentSong.coverImage}
-                            alt={currentSong.title}
-                            className="w-16 h-16 rounded-lg object-cover"
-                        />
-                        <div className="min-w-0">
-                            <h4 className="font-semibold text-lg truncate">{currentSong.title}</h4>
-                            <p className="text-sm text-white/80 truncate">{currentSong.artist}</p>
+            {/* Player Bar */}
+            {currentSong && (
+                <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-yellow-500 to-yellow-700 p-4 shadow-lg">
+                    <div className="container mx-auto flex flex-col md:flex-row items-center gap-4">
+                        {/* Song Info */}
+                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                            <img
+                                src={currentSong.coverImage}
+                                alt={currentSong.title}
+                                className="w-16 h-16 rounded-lg object-cover"
+                            />
+                            <div className="min-w-0">
+                                <h4 className="font-semibold text-lg truncate">{currentSong.title}</h4>
+                                <p className="text-sm text-white/80 truncate">{currentSong.artist}</p>
+                            </div>
                         </div>
-                    </div>
-                    {/* Controls */}
-                    <div className="flex flex-col items-center w-full md:w-auto">
-                        <div className="flex items-center gap-6 mb-2">
-                            <button
-                                onClick={togglePlayPause}
-                                className="bg-white/20 hover:bg-white/30 rounded-full p-3 transition-colors"
-                            >
-                                {isPlaying ? <FaPause /> : <FaPlay />}
+                        {/* Controls */}
+                        <div className="flex flex-col items-center w-full md:w-auto">
+                            <div className="flex items-center gap-6 mb-2">
+                                <button
+                                    onClick={togglePlayPause}
+                                    className="bg-white/20 hover:bg-white/30 rounded-full p-3 transition-colors"
+                                >
+                                    {isPlaying ? <FaPause /> : <FaPlay />}
+                                </button>
+                            </div>
+                            {/* Progress Bar */}
+                            <div className="flex items-center gap-2 w-full max-w-md">
+                                <span className="text-xs w-10 text-right">{formatTime(currentTime)}</span>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max={duration || 100}
+                                    value={currentTime}
+                                    onChange={handleSeek}
+                                    className="flex-1 h-1 bg-white/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+                                />
+                                <span className="text-xs w-10">{formatTime(duration)}</span>
+                            </div>
+                        </div>
+                        {/* Volume Control */}
+                        <div className="flex items-center gap-2 flex-1 justify-end">
+                            <button onClick={toggleMute} className="text-lg">
+                                {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
                             </button>
-                        </div>
-                        {/* Progress Bar */}
-                        <div className="flex items-center gap-2 w-full max-w-md">
-                            <span className="text-xs w-10 text-right">{formatTime(currentTime)}</span>
                             <input
                                 type="range"
                                 min="0"
-                                max={duration || 100}
-                                value={currentTime}
-                                onChange={handleSeek}
-                                className="flex-1 h-1 bg-white/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+                                max="1"
+                                step="0.01"
+                                value={isMuted ? 0 : volume}
+                                onChange={handleVolumeChange}
+                                className="w-24 h-1 bg-white/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
                             />
-                            <span className="text-xs w-10">{formatTime(duration)}</span>
                         </div>
                     </div>
-                    {/* Volume Control */}
-                    <div className="flex items-center gap-2 flex-1 justify-end">
-                        <button onClick={toggleMute} className="text-lg">
-                            {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
-                        </button>
-                        <input
-                            type="range"
-                            min="0"
-                            max="1"
-                            step="0.01"
-                            value={isMuted ? 0 : volume}
-                            onChange={handleVolumeChange}
-                            className="w-24 h-1 bg-white/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
-                        />
-                    </div>
                 </div>
-            </div>
-        )}
-        {/* Audio Element (hidden) */}
-        <audio
-            ref={audioRef}
-            src={currentSong?.audioUrl}
-            onTimeUpdate={handleTimeUpdate}
-            onEnded={handleSongEnd}
-            onLoadedMetadata={handleTimeUpdate}
-        />
-    </div>
+            )}
+            {/* Audio Element (hidden) */}
+            <audio
+                ref={audioRef}
+                src={currentSong?.audioUrl}
+                onTimeUpdate={handleTimeUpdate}
+                onEnded={handleSongEnd}
+                onLoadedMetadata={handleTimeUpdate}
+            />
+        </div>
     );
 };
 
