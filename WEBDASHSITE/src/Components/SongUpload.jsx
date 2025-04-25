@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useRef } from 'react';
 import { FaMusic, FaImage, FaUpload, FaCheck, FaTimes, FaCloudUploadAlt } from 'react-icons/fa';
+import { API_URL } from '../config';
 
 const SongUpload = () => {
     const [title, setTitle] = useState('');
@@ -27,7 +28,7 @@ const SongUpload = () => {
         formData.append('audio', audio);
 
         try {
-            const res = await axios.post('http://localhost:9000/api/upload', formData, {
+            const res = await axios.post(`${API_URL}/api/upload'`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setUploadStatus({ success: true, message: 'Upload successful!' });
