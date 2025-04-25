@@ -28,7 +28,7 @@ const SongUpload = () => {
         formData.append('audio', audio);
 
         try {
-            const res = await axios.post(`${API_URL}/api/upload'`, formData, {
+            const res = await axios.post(`${API_URL}/api/upload`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setUploadStatus({ success: true, message: 'Upload successful!' });
