@@ -15,21 +15,22 @@ const dailyTaskSchema = new mongoose.Schema({
 // Pre-save hook to add default tasks if none exist
 dailyTaskSchema.pre('save', function (next) {
   const defaultTasks = [
-    "Wake up at 5.30 am at morning",
-    "Drink 2 glasses of water",
-    "Exercise for 15 minutes",
-    "Meditation for 10 minutes",
-    "Get freshened up",
-    "Learn 10 words & sentences",
-    "Breakfast",
-    "1-hour break",
-    "Go to college / Study session for 2 hours",
-    "Lunch",
-    "Sleep 2 hours",
-    "Study session 2 hours",
-    "Drink plenty of water",
-    "Dinner",
-    "Sleep before 11:30 PM"
+    "Wake up at 6 AM",
+    "Excersize for 20 min",
+    "Meditation for 10 min For stress Free mind",
+    "Brush teeth and drink 2 glass of water",
+    "Help mom and touch there feet and pray to god",
+    "Breakfast and 2 glass of water 1.5 roti",
+    "Study session for 2 hours",
+    "1-hour break and drink 2 glass of water",
+    "Go to college / Study session for 2 hours drink 2 glass of water",
+    "Lunch and 2 glass of water 1.5 roti",
+    "Sleep 1.5 hours",
+    "Study session 2 hours drink 2 glass of water every hour",
+    "help mom and pray to god and 2 glass of water",
+    "Dinner 1.5 roti and 2 glass of water",
+    "1 hour break from 11PM to 12PM drink 2 glass of water",
+    "Sleep at 12AM"
   ];
 
   if (this.tasks.length === 0) {
