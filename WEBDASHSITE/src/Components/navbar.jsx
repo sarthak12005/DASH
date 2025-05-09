@@ -24,7 +24,7 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6">
-            {["Home", "Tasks", "Solutions", "DailyTasks", "Diary", "Study", "Song"].map((item, index) => (
+            {["Home", "Tasks", "Solutions", "Daily", "Diary", "Study", "Song"].map((item, index) => (
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.1 }}
@@ -77,7 +77,7 @@ const Navbar = () => {
         {/* Mobile Menu Dropdown */}
         {isOpen && (
           <div className="md:hidden flex flex-col items-center bg-white py-4 shadow-lg">
-            {["Home", "Tasks", "Solutions", "DailyTasks", "Diary", "Study", "Song"].map((item, index) => (
+            {["Home", "Tasks", "Solutions", "Daily", "Diary", "Study", "Song"].map((item, index) => (
               <Link
                 key={index}
                 to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
