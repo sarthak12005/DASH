@@ -115,6 +115,7 @@ module.exports = function (server) {
         });
 
         // Handle typing indicators
+        // Backend: Enhance your typing handler
         socket.on('typing-indicator', ({ recipientId, isTyping }) => {
             try {
                 const senderId = [...connectedUsers.entries()]
@@ -122,12 +123,7 @@ module.exports = function (server) {
 
                 if (!senderId || !recipientId) return;
 
-                // Update typing status
-                const userTypingStatus = typingStatus.get(senderId) || {};
-                userTypingStatus[recipientId] = isTyping;
-                typingStatus.set(senderId, userTypingStatus);
-
-                // Notify recipient if online
+                // Notify recipient
                 if (connectedUsers.has(recipientId)) {
                     io.to(connectedUsers.get(recipientId)).emit('typing-status', {
                         userId: senderId,
