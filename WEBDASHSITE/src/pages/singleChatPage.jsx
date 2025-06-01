@@ -245,7 +245,7 @@ const SingleChatPage = () => {
       </div>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto mt-16 md:mt-0 p-4 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABsSURBVDhP7cxBCsAgDETR6P3P3KZQaKGQhfwZBG8eZJYx5lprv5RS3lJK+SilfEopH6WUj1LKRynlo5TyUUr5KKV8lFI+SikfpZSPUspHKeWjlPJRSvkopfyllPJWSnkppbyUUl5KKf8H8QZbXktwL0Q5JwAAAABJRU5ErkJggg==')]">
+      <div className="flex-1 overflow-y-auto mt-12 md:mt-0 p-4 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABsSURBVDhP7cxBCsAgDETR6P3P3KZQaKGQhfwZBG8eZJYx5lprv5RS3lJK+SilfEopH6WUj1LKRynlo5TyUUr5KKV8lFI+SikfpZSPUspHKeWjlPJRSvkopfyllPJWSnkppbyUUl5KKf8H8QZbXktwL0Q5JwAAAABJRU5ErkJggg==')]">
         {messages.map((message) => (
           <div
             key={message._id}
@@ -278,7 +278,7 @@ const SingleChatPage = () => {
       </div>
 
       {/* Message Input */}
-      <div className="p-3 bg-white border-t border-amber-200">
+      <div className="p-3 bg-white border-t border-amber-200 absolute bottom-0 left-0 right-0">
         <div className="container mx-auto flex">
           <input
             type="text"
