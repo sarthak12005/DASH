@@ -9,6 +9,9 @@ import Admin from "./pages/Admin";
 import SongPage from "./pages/SongPage";
 import Daily from "./pages/Daily";
 import Words from "./pages/Words";
+import ChatPage from "./pages/ChatPage";
+import SingleChatPage from "./pages/singleChatPage";
+
 // import Gallery from "./pages/Gallery";
 
 function App() {
@@ -26,6 +29,8 @@ function App() {
         {/* <Route path="/gallery" element={<Gallery/>}/> */}
         <Route path="/song" element={<SongPage />} />
         <Route path='/admin' element={<Admin />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat/:userId" element={<SingleChatPage />} />
       </Routes>
     </Router>
   );

@@ -9,11 +9,19 @@ const dailyTaskRoutes = require('./routes/dailyTaskRoutes');
 const diaryRoutes = require('./routes/diaryRoutes');
 const upSongRoutes = require('./routes/upSongRoute');
 const songUploadRoutes = require('./routes/songUploadRoute');
+const socketHandler = require('./utils/socketHandler');
+const chatRoutes = require('./routes/chatRoute');
+const http = require('http');
 
-
+// Initializing the socket.io server
 const PORT = process.env.PORT || 9000;
 
 const app = express();
+const server = http.createServer(app);
+
+const io  = socketHandler(server);
+
+
 
 app.use(express.json())
 app.use(cors({
@@ -31,12 +39,13 @@ app.use('/api/daily-tasks', dailyTaskRoutes);
 app.use('/api/diary', diaryRoutes);
 app.use('/api/Up-Song', upSongRoutes);
 app.use('/api', songUploadRoutes);
+app.use('/api/chat', chatRoutes);
 
 app.get('/', (req, res) => {
     res.send("Welcome to the DASH backend");
 });
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log("server is running on http://localhost:9000");
 })
