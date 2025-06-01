@@ -209,7 +209,7 @@ const SingleChatPage = () => {
   return (
     <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 to-amber-100 relative">
       {/* Chat Header */}
-      <div className="bg-amber-600 text-white p-4 px-5 shadow-lg absolute md:static top-0 left-0 right-0 z-10">
+      <div className="bg-amber-600 text-white p-4 px-5 shadow-lg sticky md:static top-0 left-0 right-0 z-10">
         <div className="container mx-auto flex items-center">
           <button
             onClick={() => navigate('/chat')}
