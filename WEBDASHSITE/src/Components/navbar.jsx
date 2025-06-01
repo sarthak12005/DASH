@@ -77,7 +77,7 @@ const Navbar = () => {
         {/* Mobile Menu Dropdown */}
         {isOpen && (
           <div className="md:hidden flex flex-col items-center bg-white py-4 shadow-lg">
-            {["Home", "Tasks", "Chat", "Daily", "Diary", "Study", "Song"].map((item, index) => (
+            {["Home", "Tasks", "Chat", "Daily", "Diary", "Study", "Song","Admin"].map((item, index) => (
               <Link
                 key={index}
                 to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
