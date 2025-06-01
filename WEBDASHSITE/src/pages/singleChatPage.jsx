@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { socketService } from '../utils/socketClient';
 import axios from 'axios';
+import { API_URL } from '../config';
 import { getUserIdFromToken } from '../utils/auth';
 import { jwtDecode } from 'jwt-decode';
 
@@ -30,14 +31,14 @@ const SingleChatPage = () => {
     const fetchData = async () => {
       try {
         // Fetch recipient info
-        const { data: recipientData } = await axios.get(`http://localhost:9000/api/chat/users/${userId}`, {
+        const { data: recipientData } = await axios.get(`${API_URL}/api/chat/users/${userId}`, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
         setRecipient(recipientData);
 
         // Fetch message history
         const { data: messagesData } = await axios.get(
-          `http://localhost:9000/api/chat/messages/${currentUserId}/${userId}`,
+          `${API_URL}/api/chat/messages/${currentUserId}/${userId}`,
           { headers: { Authorization: `Bearer ${accessToken}` } }
         );
         setMessages(messagesData);

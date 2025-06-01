@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client';
 import { jwtDecode } from 'jwt-decode'; // More reliable than atob
+import { API_URL } from '../config'; // Adjust the import path as necessary
 
 class SocketService {
   constructor() {
@@ -20,7 +21,7 @@ class SocketService {
         throw new Error('Invalid token: No user ID found');
       }
 
-      this.socket = io('http://localhost:9000' || 'https://dash-ehxl.onrender.com', {
+      this.socket = io(`${API_URL}` || 'http://localhost:9000', {
         auth: { token: accessToken },
         transports: ['websocket'],
         reconnection: true,
