@@ -106,6 +106,28 @@ const SingleChatPage = () => {
     }
   }, [userId]);
 
+
+  const handleClearMessages = async () => {
+    try {
+      const response = await axios.delete(`${API_URL}/api/chat/delete-msg`, {
+        data: { otherUser: userId,
+           currentUser: currentUserId,
+         }, // The user you're chatting with
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      if (response.data.success) {
+        setMessages([]); // Clear local messages state
+        alert(`Cleared messages`);
+      }
+    } catch (err) {
+      console.log("Error clearing messages:", err);
+      alert('Failed to clear messages');
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
 
@@ -187,7 +209,7 @@ const SingleChatPage = () => {
   return (
     <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 to-amber-100">
       {/* Chat Header */}
-      <div className="bg-amber-600 text-white p-4 shadow-lg">
+      <div className="bg-amber-600 text-white p-4 px-5 shadow-lg">
         <div className="container mx-auto flex items-center">
           <button
             onClick={() => navigate('/chat')}
@@ -197,16 +219,27 @@ const SingleChatPage = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-amber-200 flex items-center justify-center text-amber-800 font-bold">
-              {recipient.name.charAt(0).toUpperCase()}
+          <div className="flex items-center justify-between w-full px-2.5">
+            <div className="first flex items-center">
+              <div className="w-10 h-10 rounded-full bg-amber-200 flex items-center justify-center text-amber-800 font-bold">
+                {recipient.name.charAt(0).toUpperCase()}
+              </div>
+              <div className="ml-3">
+                <h2 className="font-bold">{recipient.name}</h2>
+                <p className={`text-xs ${recipient.online ? 'text-green-300' : 'text-amber-200'}`}>
+                  {recipient.online ? 'Online' : 'Offline'}
+                </p>
+              </div>
             </div>
-            <div className="ml-3">
-              <h2 className="font-bold">{recipient.name}</h2>
-              <p className={`text-xs ${recipient.online ? 'text-green-300' : 'text-amber-200'}`}>
-                {recipient.online ? 'Online' : 'Offline'}
-              </p>
-            </div>
+          </div>
+          <div className="clear-msg">
+            <button
+              onClick={handleClearMessages}
+              className="ml-2 px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+              title="Clear conversation"
+            >
+              Clear
+            </button>
           </div>
         </div>
       </div>

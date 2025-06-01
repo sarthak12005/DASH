@@ -12,7 +12,7 @@ const ChatPage = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const accessToken = localStorage.getItem('accessToken');
-    
+
 
     useEffect(() => {
         if (!accessToken) {
@@ -21,7 +21,7 @@ const ChatPage = () => {
         }
 
         const userId = getUserIdFromToken(accessToken) || jwtDecode(accessToken)._id;
-    
+
 
         // Initialize socket connection
         try {
@@ -129,13 +129,21 @@ const ChatPage = () => {
         <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 to-amber-100">
             {/* Header */}
             <div className="bg-amber-600 text-white p-4 shadow-lg">
-                <div className="container mx-auto flex justify-between items-center">
+                <div className="container mx-auto px-2.5 flex justify-between items-center">
+                    <button
+                        onClick={() => navigate('/tasks')}
+                        className="mr-4 p-1 rounded-full hover:bg-amber-700 transition-colors"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
                     <h1 className="text-2xl font-bold">Messages</h1>
-                    <button className="p-2 rounded-full hover:bg-amber-700 transition-colors">
+                    {/* <button className="p-2 rounded-full hover:bg-amber-700 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                    </button>
+                    </button> */}
                 </div>
             </div>
 

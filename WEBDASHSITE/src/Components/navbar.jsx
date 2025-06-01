@@ -87,24 +87,6 @@ const Navbar = () => {
                 {item}
               </Link>
             ))}
-            {role === "admin" && (
-              <Link
-                to="/admin"
-                className="text-gray-700 font-medium py-2 hover:text-pink-500 transition"
-                onClick={() => setIsOpen(false)}
-              >
-                Admin
-              </Link>
-            )}
-            {email === "dash2006@gmail.com" && (
-              <Link
-                to="/admin"
-                className="text-gray-700 font-medium py-2 hover:text-pink-500 transition"
-                onClick={() => setIsOpen(false)}
-              >
-                Admin
-              </Link>
-            )}
           </div>
         )}
       </div>
