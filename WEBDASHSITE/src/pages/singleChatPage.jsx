@@ -207,9 +207,9 @@ const SingleChatPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 to-amber-100">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 to-amber-100 relative">
       {/* Chat Header */}
-      <div className="bg-amber-600 text-white p-4 px-5 shadow-lg">
+      <div className="bg-amber-600 text-white p-4 px-5 shadow-lg absolute md:static top-0 left-0 right-0 z-10">
         <div className="container mx-auto flex items-center">
           <button
             onClick={() => navigate('/chat')}
@@ -245,7 +245,7 @@ const SingleChatPage = () => {
       </div>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto p-4 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABsSURBVDhP7cxBCsAgDETR6P3P3KZQaKGQhfwZBG8eZJYx5lprv5RS3lJK+SilfEopH6WUj1LKRynlo5TyUUr5KKV8lFI+SikfpZSPUspHKeWjlPJRSvkopfyllPJWSnkppbyUUl5KKf8H8QZbXktwL0Q5JwAAAABJRU5ErkJggg==')]">
+      <div className="flex-1 overflow-y-auto mt-16 md:mt-0 p-4 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABsSURBVDhP7cxBCsAgDETR6P3P3KZQaKGQhfwZBG8eZJYx5lprv5RS3lJK+SilfEopH6WUj1LKRynlo5TyUUr5KKV8lFI+SikfpZSPUspHKeWjlPJRSvkopfyllPJWSnkppbyUUl5KKf8H8QZbXktwL0Q5JwAAAABJRU5ErkJggg==')]">
         {messages.map((message) => (
           <div
             key={message._id}
